@@ -2680,6 +2680,11 @@ declare namespace monaco.editor {
 		 */
 		automaticLayout?: boolean;
 		/**
+		 * Rename matching regions on type.
+		 * Defaults to false.
+		 */
+		autoRename?: boolean;
+		/**
 		 * Control the wrapping of the editor.
 		 * When `wordWrap` = "off", the lines will never wrap.
 		 * When `wordWrap` = "on", the lines will wrap at the viewport width.
@@ -4360,6 +4365,11 @@ declare namespace monaco.languages {
 	export function registerDocumentHighlightProvider(languageId: string, provider: DocumentHighlightProvider): IDisposable;
 
 	/**
+	 * Register an on type rename provider.
+	 */
+	export function registerOnTypeRenameProvider(languageId: string, provider: OnTypeRenameProvider): IDisposable;
+
+	/**
 	 * Register a definition provider (used by e.g. go to definition).
 	 */
 	export function registerDefinitionProvider(languageId: string, provider: DefinitionProvider): IDisposable;
@@ -5062,6 +5072,13 @@ declare namespace monaco.languages {
 		 * all exit-points of a function.
 		 */
 		provideDocumentHighlights(model: editor.ITextModel, position: Position, token: CancellationToken): ProviderResult<DocumentHighlight[]>;
+	}
+
+	/**
+	 * Returns the ranges that should be linked/modified on type together.
+	 */
+	export interface OnTypeRenameProvider {
+		provideOnTypeRenameRanges(model: editor.ITextModel, position: Position, token: CancellationToken): ProviderResult<IRange[]>;
 	}
 
 	/**
