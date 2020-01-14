@@ -8,11 +8,8 @@
 import * as keytarType from 'keytar';
 
 function getKeytar(): Keytar | undefined {
-	// webpack will replace direct usage of require, so use eval to get around this
-	// tslint:disable-next-line:no-eval
-	const vscodeRequire = eval('require');
 	try {
-		return vscodeRequire('keytar');
+		return require('keytar');
 	} catch (err) {
 		console.log(err);
 	}
@@ -46,7 +43,6 @@ export class Keychain {
 			return await this.keytar.setPassword(SERVICE_ID, ACCOUNT_ID, token);
 		} catch (e) {
 			// Ignore
-			console.log(e);
 		}
 	}
 
@@ -55,7 +51,6 @@ export class Keychain {
 			return await this.keytar.getPassword(SERVICE_ID, ACCOUNT_ID);
 		} catch (e) {
 			// Ignore
-			console.log(e);
 		}
 	}
 
